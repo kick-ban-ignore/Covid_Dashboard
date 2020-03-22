@@ -8,9 +8,9 @@ from bs4 import BeautifulSoup
 import requests
 
 #Title and header
-st.title("Covid-19 Dashboard")
+st.title("Covid-19 in Numbers")
 '''
-EDA for Covid-19 related numbers: cases and deaths by country and worldwide
+Data Analysis for Covid-19 related numbers: cases and deaths by country and worldwide
 ***************************************************************************
 '''
 
@@ -59,8 +59,10 @@ if st.button("About"):
 	st.subheader("Covid-19 Data EDA Webapp")
 	'''
 	Data from [Our World in Data] (https://ourworldindata.org/coronavirus-source-data)
-		
-	Built with Streamlit
 	
 	By Max [@kick_ban_ignore](https://www.twitter.com/kick_ban_ignore)
+	
+	Built with Streamlit
+	
+	Wash your hands! :mask: :sweat_drops: :+1:
 	'''
