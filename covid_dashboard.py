@@ -4,8 +4,7 @@ import streamlit as st
 import pandas as pd
 import plotly_express as px
 import plotly.graph_objects as go
-from bs4 import BeautifulSoup
-import requests
+
 
 #Title and header
 st.title("Covid-19 in Numbers")
@@ -15,6 +14,7 @@ Data Analysis for Covid-19 related numbers: cases and deaths by country and worl
 '''
 
 #Data import and columns selection
+#Case and Death numbers
 data = "https://covid.ourworldindata.org/data/ecdc/full_data.csv"
 df = st.cache(pd.read_csv)(data)  # caches DF, @st.cache for functions
 
@@ -26,10 +26,14 @@ del countries[-2]
 country = st.sidebar.selectbox('Pick a country!', countries)
 
 df_filtered = df[df["location"] == country]
+
+#Getting the numbers
 latest_deathcount = df_filtered.iloc[-1:,5]
 latest_casecount = df_filtered.iloc[-1:,4]
 
-st.write(country + "  -  Confirmed Cases: " + str(latest_casecount.values) + "  -  Confirmed Deaths: " + str(latest_deathcount.values))
+
+st.write(country + "  -  Confirmed Cases: " + str(latest_casecount.values) + "  -  Confirmed Deaths: "
+		 + str(latest_deathcount.values))
 
 
 # Create Bar charts using plotly
@@ -37,17 +41,17 @@ fig_deaths = go.Figure(data=[
 	go.Bar(name="Total Deaths", x=df_filtered.date, y=df_filtered['total_deaths'],
  				),
  	go.Bar(name="New Deaths", x=df_filtered.date, y=df_filtered['new_deaths']
-                      )])
+     )])
 fig_cases = go.Figure(data=[
 	go.Bar(name="Total Cases", x=df_filtered.date, y=df_filtered['total_cases']
  				),
  	go.Bar(name="New Cases", x=df_filtered.date, y=df_filtered['new_cases']
-                      )])
+                      )
+	])
 
 # Customize aspect
 fig_cases.update_layout(title_text='Cases in ' + country, xaxis_rangeslider_visible=True)
 fig_deaths.update_layout(title_text='Deaths in ' + country, xaxis_rangeslider_visible=True)
-
 
 # Plot the 4 different charts
 st.plotly_chart(fig_cases)
@@ -60,9 +64,9 @@ if st.button("About"):
 	'''
 	Data from [Our World in Data] (https://ourworldindata.org/coronavirus-source-data)
 	
-	By Max [@kick_ban_ignore](https://www.twitter.com/kick_ban_ignore)
-	
 	Built with Streamlit
+		
+	By Max [@kick_ban_ignore](https://www.twitter.com/kick_ban_ignore)
 	
 	Wash your hands! :mask: :sweat_drops: :+1:
 	'''
